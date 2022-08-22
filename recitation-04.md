@@ -36,23 +36,23 @@ To use this function to count words, you'll need to implement your own `map_f` a
 
 4. Assume that a word `w` appears `n` times. What is the **work** and **span** of `word_count_reduce` for this word, assuming a parallel implementation of the `reduce` function?
 
-**Enter answer here**
+    **Enter your answer in answers.md**
 
 
 5. Why are we going through all this trouble? Couldn't I just use this function to count words?
 
-```python
-docs = ['i am sam i am', 'sam is ham']
-counts = {}
-for doc in docs:
-    for term in doc.split():
-        counts[term] = counts.get(term, 0) + 1
-# counts = {'i': 2, 'am': 2, 'sam': 2, 'is': 1, 'ham': 1}
-```
+    ```python
+    docs = ['i am sam i am', 'sam is ham']
+    counts = {}
+    for doc in docs:
+        for term in doc.split():
+            counts[term] = counts.get(term, 0) + 1
+    # counts = {'i': 2, 'am': 2, 'sam': 2, 'is': 1, 'ham': 1}
+    ```
 
-What is the problem that prevents us from easily parallelizing this solution?
+    What is the problem that prevents us from easily parallelizing this solution?
 
-**Enter answer here**
+    **Enter your answer in answers.md**
 
 
 ## Part 2: Sentiment analysis
