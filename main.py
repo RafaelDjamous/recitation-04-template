@@ -1,6 +1,7 @@
 # recitation-04
 
 from collections import defaultdict
+import functools
 
 
 #### PART ONE ###
@@ -21,6 +22,7 @@ def run_map_reduce(map_f, reduce_f, docs):
     # 2. group all pairs by their key
     # e.g., [('am', [1, 1]), ('ham', [1]), ('i', [1, 1]), ('is', [1]), ('sam', [1, 1])]
     groups = collect(pairs)
+   # print ("groups are", groups)
     # 3. reduce each group to the final answer
     # e.g., [('am', 2), ('ham', 1), ('i', 2), ('is', 1), ('sam', 2)]
     return [reduce_f(g) for g in groups]
@@ -36,8 +38,14 @@ def word_count_map(doc):
     >>> word_count_map('i am sam i am')
     [('i', 1), ('am', 1), ('sam', 1), ('i', 1), ('am', 1)]
     """
+    words = doc.split()
+    tuples =[]
+    for w in words:
+        tuples.append((w,1))
+    #print ("tuples are: " ,tuples)
+    return tuples
     ###TODO
-    pass
+    #pass
 
 def test_word_count_map():
     assert word_count_map('i am sam i am') == \
@@ -55,8 +63,11 @@ def word_count_reduce(group):
     
     NOTE: you should use call the `reduce` function here.
     """
+    total = functools.reduce(lambda a, b: a+b, group[1])
+    #print ("tokan & occurences are: " , group [0], total)
+    return (tuple((group[0],total)))
     ###TODO
-    pass
+    #pass
     
 def test_word_count_reduce():
     assert word_count_reduce(['i', [1,1,1]]) == ('i', 3)
@@ -129,8 +140,18 @@ def sentiment_map(doc,
     >>> sentiment_map('it was a terrible waste of time')
     [('negative', 1), ('negative', 1)]
     """
+    terms = []
+    phrases = word_count_map(doc) 
+    #print (phrases)
+    for p in phrases:
+        if p[0] in neg_terms:
+            terms.append(tuple(('negative', 1)))
+        elif p[0] in pos_terms:
+            terms.append(tuple(('positive', 1)))
+#    print (terms)
+    return terms
     ###TODO
-    pass
+    #pass
 
 def test_sentiment_map():
     assert sentiment_map('it was a terrible waste of time') == [('negative', 1), ('negative', 1)]
@@ -138,7 +159,7 @@ def test_sentiment_map():
     
 def test_sentiment():
     docs = [
-        'it was not great but not terrible',
+       'it was not great but not terrible',
         'thou art a boil a plague-sore or embossed carbuncle in my corrupted blood',
         'it was a sockdolager of a good time'
     ]
